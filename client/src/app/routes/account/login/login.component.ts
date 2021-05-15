@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { ApiURLService } from 'src/app/services/api-url.service';
 import { AccountService } from '../../../services/account.service';
 import { LogService } from '../../../services/log.service';
-import { AccountModule } from '../account.module';
 
 @Component({
   selector: 'app-login',
@@ -36,10 +34,6 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
-  registration(): void {
-    this.router.navigate(['/account/register'], { queryParams: { returnUrl: `${this.returnUrl}`, username: `${this.f.username.value}` }});
-  }
-
   // convenience getter for easy access to form fields
   // tslint:disable-next-line: typedef
   get f() {
@@ -63,7 +57,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    /*this.accountService
+    this.accountService
       .login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
@@ -74,6 +68,6 @@ export class LoginComponent implements OnInit {
           // console.log(error);
           this.logService.log('Wrong Username or Password');
         },
-      );*/
+      );
   }
 }

@@ -48,15 +48,15 @@ export class AccountService {
   }
 
   private extractUser(): User | null {
-    const u = localStorage.getItem(this.userLocalStorage);
+    /*const u = localStorage.getItem(this.userLocalStorage);
     if (u !== null) {
       return JSON.parse(u);
-    }
+    }*/
     return null;
   }
 
   login(username: string, password: string): Observable<User | null> {
-    // console.log({ username, password });
+    console.log({ username, password });
     return this.http.post<Response<User | null>>(`${this.apiURL.baseApiUrl}/users/login`, { username, password })
       .pipe(map(u => {
         this.saveUser(u.data);
