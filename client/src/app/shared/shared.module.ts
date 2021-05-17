@@ -14,6 +14,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -23,6 +24,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 @NgModule({
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatTableModule,
@@ -47,6 +49,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   ],
   exports: [
     CommonModule,
+    BrowserAnimationsModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatTableModule,

@@ -15,14 +15,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     HomePageComponent
   ],
   imports: [
-    CommonModule,
-    SharedModule,
-    MatButtonModule
   ], 
   exports: [
-    CommonModule,
-    SharedModule,
-    MatButtonModule
   ]
 })
 export class HomeModule { }
