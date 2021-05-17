@@ -48,20 +48,21 @@ export class AccountService {
   }
 
   private extractUser(): User | null {
-    /*const u = localStorage.getItem(this.userLocalStorage);
+    const u = localStorage.getItem(this.userLocalStorage);
     if (u !== null) {
       return JSON.parse(u);
-    }*/
+    }
     return null;
   }
 
   login(username: string, password: string): Observable<User | null> {
     console.log({ username, password });
-    return this.http.post<Response<User | null>>(`${this.apiURL.baseApiUrl}/users/login`, { username, password })
+    return this.http.post<User | null>(`${this.apiURL.baseApiUrl}/users/login`, { username, password })
       .pipe(map(u => {
-        this.saveUser(u.data);
+        //console.log(u);
+        this.saveUser(u);
         this.logService.log('Logged in properly');
-        return u.data;
+        return u;
       }));
   }
 
@@ -100,7 +101,7 @@ export class AccountService {
       this.logService.log('No user logged while try to update user info', LogLevel.Error);
       throw Error('Invalid user');
     }
-    this.http.put(`${this.apiURL.baseApiUrl}/users/${user.id}`, data)
+    this.http.put(`${this.apiURL.baseApiUrl}/users/${user.user_id}`, data)
       .pipe(map(_ => {
         this.logService.log('Data updated correctly');
         return;
@@ -128,7 +129,7 @@ export class AccountService {
       this.logService.log('No user logged while try to delete user', LogLevel.Error);
       return throwError('No user logged');
     }
-    return this.http.delete<Response<User>>(`${this.apiURL.baseApiUrl}/users/${user.id}`)
+    return this.http.delete<Response<User>>(`${this.apiURL.baseApiUrl}/users/${user.user_id}`)
       .pipe(map(a => {
         this.saveUser(null);
         return a.data;

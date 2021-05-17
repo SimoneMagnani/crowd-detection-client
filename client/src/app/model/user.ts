@@ -1,6 +1,6 @@
 export interface User {
-  id: string;
-  username: string;
-  token: string;
+  user_id: string;
+  //username: string;
+  access_token: string;
   //refresh: string;
 }

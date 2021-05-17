@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-home-page',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private accountService: AccountService,
+  ) { }
 
   ngOnInit(): void {
   }
 
+  public userVal(): void {
+    console.log(this.accountService.userValue);
+  }
 }
