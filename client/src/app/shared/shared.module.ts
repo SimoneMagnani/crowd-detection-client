@@ -24,7 +24,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatTableModule,
@@ -49,7 +48,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   exports: [
     CommonModule,
-    BrowserAnimationsModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatTableModule,

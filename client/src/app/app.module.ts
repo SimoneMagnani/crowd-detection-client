@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { EmptyLayoutComponent } from './layout/empty-layout/empty-layout.component';
 import { SharedModule } from './shared/shared.module';
+import { AddCameraComponent } from './routes/add-camera/add-camera.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { SharedModule } from './shared/shared.module';
     HomePageComponent,
     LayoutComponent,
     EmptyLayoutComponent,
+    AddCameraComponent,
   ],
   imports: [
     BrowserModule,

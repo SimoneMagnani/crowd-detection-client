@@ -11,7 +11,6 @@ import { AccountRoutingModule } from './account-routing.module';
     LoginComponent,
   ],
   imports: [
-    CommonModule, 
     AccountRoutingModule,
     SharedModule,
   ]
