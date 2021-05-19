@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { errorToString, OnError } from '../model/error';
 import { LogLevel } from '../model/logLevel';
 
 @Injectable({
@@ -12,7 +13,9 @@ export class LogService {
   readonly maxLogInProduction = LogLevel.All;
   private isProduction = false;
 
-  constructor( ) {
+  constructor(
+    private snackBar: MatSnackBar,
+  ) {
     if (environment.production) {
       this.isProduction = true;
     }
@@ -34,5 +37,21 @@ export class LogService {
     } else {
       console.log(value);
     }
+  }
+
+  private formatStringAndOpen(message: string, action?: string, config?: MatSnackBarConfig): void {
+    message = message.charAt(0).toUpperCase() + message.slice(1);
+    this.snackBar.open(message, action, config);
+  }
+  
+  errorSnackBar(error: OnError | string, duration: number = 10000): void {
+    const oe = error as OnError;
+    let value = '';
+    if (oe.status) {
+      value = errorToString(oe);
+    } else {
+      value = error.toString();
+    }
+    this.formatStringAndOpen(value, undefined, { duration, panelClass: 'snackBarError' });
   }
 }
