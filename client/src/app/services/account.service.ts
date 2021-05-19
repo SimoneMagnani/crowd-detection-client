@@ -10,6 +10,7 @@ import { User } from '../model/user';
 import { UserRegistration, UserRegistrationResponse } from '../model/UserRegistration';
 import { ApiURLService } from './api-url.service';
 import { LogService } from './log.service';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class AccountService {
   private userSubject: BehaviorSubject<User | null>;
   private userLocalStorage = 'user';
   public user: Observable<User | null>;
+  private jwtHelper = new JwtHelperService();
 
   constructor(
     private router: Router,
@@ -49,9 +51,10 @@ export class AccountService {
 
   private extractUser(): User | null {
     const u = localStorage.getItem(this.userLocalStorage);
-    if (u !== null) {
+    if (u !== null && !this.jwtHelper.isTokenExpired(JSON.parse(u).access_token)) {
       return JSON.parse(u);
     }
+    this.saveUser(null);
     return null;
   }
 
