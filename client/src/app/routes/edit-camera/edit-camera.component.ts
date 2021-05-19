@@ -22,7 +22,7 @@ export class EditCameraComponent implements OnInit {
     this.http.get<Camera[] | null>(`${this.apiURL.baseApiUrl}/cameras`)
     .subscribe(
       x => {
-        this.logService.log("received " +x?.length+ "cameras")
+        this.logService.log("received " +x?.length+ " cameras")
         if (x)
           this.cameras = x
       },
