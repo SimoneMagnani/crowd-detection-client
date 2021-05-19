@@ -1,8 +1,8 @@
 export interface Camera {
-  "camera_id": String,
-  "camera_name": String,
-  "camera_address": String,
-  "topic_root": String,
-  "mqtt_broker_ip": String ,
+  "camera_id": string,
+  "camera_name": string,
+  "camera_address": string,
+  "topic_root": string,
+  "mqtt_broker_ip": string ,
   "mqtt_broker_port": number
 }
