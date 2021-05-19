@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           // console.log(error);
-          this.logService.log('Wrong Username or Password');
+          this.logService.messageSnackBar('Wrong Username or Password');
         },
       );
   }

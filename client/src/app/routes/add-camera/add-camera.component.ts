@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Camera } from 'src/app/model/Camera/camera';
 import { OnError } from 'src/app/model/error';
+import { LogLevel } from 'src/app/model/logLevel';
 import { ApiURLService } from 'src/app/services/api-url.service';
 import { LogService } from 'src/app/services/log.service';
 
@@ -76,8 +77,8 @@ export class AddCameraComponent implements OnInit {
     console.log(`${this.apiURL.baseApiUrl}/cameras`)
     this.http.post<Camera | null>(`${this.apiURL.baseApiUrl}/cameras`, newCamera)
       .subscribe(
-        x => {this.logService.log("add correctly" + x); console.log(x)},
-        err => {this.logService.errorSnackBar(<OnError>err); console.log(<OnError>err)}
+        x => this.logService.messageSnackBar("add correctly " +x?.camera_id),
+        err => this.logService.errorSnackBar(err)
       );
 
   }
