@@ -1,0 +1,39 @@
+.nav-buttons {
+  background-color: grey;
+}
+
+#desktop {
+  display: none;
+}
+
+.div-buttons {
+  display: grid;
+}
+
+.sidenav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: grey;
+}
+
+#desktop {
+  width: 100%;
+  display: flex;
+  align-items: right;
+  justify-content: flex-end;
+  * {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+#mobile {
+  display: none;
+}
+
+button {
+  color: black;
+}

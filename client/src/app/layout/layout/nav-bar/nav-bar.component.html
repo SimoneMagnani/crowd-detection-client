@@ -1,0 +1,4 @@
+<a mat-button routerLink="/home" routerLinkActive="active">Home</a>
+<a mat-button routerLink="/camera/add" routerLinkActive="active">Add Camera</a>
+<a mat-button routerLink="/camera/edit" routerLinkActive="active">Edit Camera</a>
+<button *ngIf="this.isLogged()" mat-button (click)="this.logout()">logout</button>
