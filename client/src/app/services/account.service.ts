@@ -54,7 +54,7 @@ export class AccountService {
     if (u !== null && !this.jwtHelper.isTokenExpired(JSON.parse(u).access_token)) {
       return JSON.parse(u);
     }
-    this.saveUser(null);
+    //this.saveUser(null);
     return null;
   }
 
