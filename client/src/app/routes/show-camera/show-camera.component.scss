@@ -1,0 +1,30 @@
+div {
+  margin-right: auto;
+  border: 2em solid transparent;
+}
+
+.delete {
+  background-color: red;
+}
+
+mat-card {
+  padding: 2em;
+}
+
+mat-card-title, mat-card-subtitle{
+  text-align: center;
+}
+
+mat-card-footer {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 1em;
+  p {
+      line-height: 3;
+      display: inline-block;
+      vertical-align: middle;
+    button + button{
+      margin-left: 0.5em;
+    }
+  }
+}

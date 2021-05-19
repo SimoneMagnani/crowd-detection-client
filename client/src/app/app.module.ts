@@ -11,6 +11,8 @@ import { EmptyLayoutComponent } from './layout/empty-layout/empty-layout.compone
 import { SharedModule } from './shared/shared.module';
 import { AddCameraComponent } from './routes/add-camera/add-camera.component';
 import { JWTInterceptor } from './helper/interceptor/jwt.interceptor';
+import { EditCameraComponent } from './routes/edit-camera/edit-camera.component';
+import { ShowCameraComponent } from './routes/show-camera/show-camera.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { JWTInterceptor } from './helper/interceptor/jwt.interceptor';
     LayoutComponent,
     EmptyLayoutComponent,
     AddCameraComponent,
+    EditCameraComponent,
+    ShowCameraComponent,
   ],
   imports: [
     BrowserModule,

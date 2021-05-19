@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './helper/guards/auth.guard';
 import { LayoutComponent } from './layout/layout/layout.component';
 import { AddCameraComponent } from './routes/add-camera/add-camera.component';
+import { EditCameraComponent } from './routes/edit-camera/edit-camera.component';
 import { HomePageComponent } from './routes/home/home-page/home-page.component';
 
 
@@ -15,6 +16,7 @@ const routes: Routes = [
     { path: 'home', component: HomePageComponent, canActivate: [AuthGuard] },
     { path: 'account', loadChildren: accountModule },
     { path: 'camera/add', component: AddCameraComponent, canActivate: [AuthGuard] },
+    { path: 'camera/edit', component: EditCameraComponent, canActivate: [AuthGuard] },
     //{ path: 'game', loadChildren: () => GameModule },
     { path: '**', redirectTo: 'home' }
   ]
