@@ -43,6 +43,14 @@ export class LogService {
     message = message.charAt(0).toUpperCase() + message.slice(1);
     this.snackBar.open(message, action, config);
   }
+
+  infoSnackBar(message: string, duration: number = 10000): void {
+    this.formatStringAndOpen(message, 'OK', { duration, panelClass: 'snackBarInfo' });
+  }
+
+  messageSnackBar(message: string, duration: number = 3000): void {
+    this.formatStringAndOpen(message, undefined, { duration, panelClass: 'snackBarMessage' });
+  }
   
   errorSnackBar(error: OnError | string, duration: number = 10000): void {
     const oe = error as OnError;

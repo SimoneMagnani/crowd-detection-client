@@ -6,3 +6,31 @@ body {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.snackBarMessage {
+  background-color: #add8e6;
+  color: black;
+  text-align: center;
+  .mat-simple-snackbar-action {
+    color: black;
+  }
+}
+
+.snackBarInfo {
+  background-color: blue;
+  color: white;
+  text-align: center;
+  .mat-simple-snackbar-action {
+    color: black;
+  }
+}
+
+.snackBarError {
+  background-color:red;
+  color: white;
+  text-align: center;
+  .mat-simple-snackbar-action {
+    font-weight: bolder;
+  }
+}
