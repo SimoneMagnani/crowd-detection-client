@@ -1,5 +1,6 @@
 <div>
-  <button mat-raised-button color="primary" (click)="this.userVal()">user val</button>
-  <button>normal</button>
-  <button mat-button>mat-button</button>
+  <button mat-raised-button color="primary" (click)="this.addNewCam()">Decide cam to inspect</button>
+</div>
+<div>
+  <app-show-camera *ngFor="let camera of activeCameras" [camera]= "camera" class="ok"></app-show-camera>
 </div>

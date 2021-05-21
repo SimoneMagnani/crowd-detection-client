@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Camera } from 'src/app/model/Camera/camera';
 import { ApiURLService } from 'src/app/services/api-url.service';
+import { CameraService } from 'src/app/services/camera.service';
 import { LogService } from 'src/app/services/log.service';
 import { EditCameraDialogComponent } from '../edit-camera-dialog/edit-camera-dialog.component';
 
@@ -17,7 +18,8 @@ export class ShowCameraComponent implements OnInit {
     private http: HttpClient,
     private apiURL: ApiURLService,
     public dialog: MatDialog,
-    private logService: LogService
+    private logService: LogService,
+    private cameraService: CameraService
   ) { }
 
   ngOnInit(): void {
@@ -27,15 +29,13 @@ export class ShowCameraComponent implements OnInit {
     return JSON.stringify(cam)
   }
 
-  public camName(): string {
-    return this.camera.camera_name ? this.camera.camera_name : this.camera.camera_id
-  }
+
 
   public delete() {
-    if(confirm("Are you sure to delete " + this.camName() + " cam?")) {
+    if(confirm("Are you sure to delete " + this.cameraService.camName(this.camera) + " cam?")) {
       console.log(`${this.apiURL.baseApiUrl}/camera/${this.camera.camera_id}`)
       this.http.delete<Camera | null>(`${this.apiURL.baseApiUrl}/camera/${this.camera.camera_id}`).subscribe(
-        x => this.logService.messageSnackBar("removed correctly" + this.camName()),
+        x => this.logService.messageSnackBar("removed correctly" + this.cameraService.camName(this.camera)),
         err => this.logService.errorSnackBar(err))
         window.location.reload()
     }

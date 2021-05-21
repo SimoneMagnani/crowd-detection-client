@@ -1,0 +1,6 @@
+<mat-selection-list #selectedCameras>
+  <mat-list-option *ngFor="let camera of cameras;  let i = index" value="{{i}}" selected="{{isActiveCameras[i]}}">
+    {{camera.camera_id}}
+  </mat-list-option>
+  <button mat-list-item (click)="save()"> Save </button>
+</mat-selection-list>

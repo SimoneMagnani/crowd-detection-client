@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from 'src/app/services/account.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Camera } from 'src/app/model/Camera/camera';
+import { CameraService } from 'src/app/services/camera.service';
+import { ListCamerasComponent } from '../../list-cameras/list-cameras.component';
 
 @Component({
   selector: 'app-home-page',
@@ -8,14 +11,26 @@ import { AccountService } from 'src/app/services/account.service';
 })
 export class HomePageComponent implements OnInit {
 
+  public activeCameras: Camera[]
+
   constructor(
-    private accountService: AccountService,
-  ) { }
+    public dialog: MatDialog,
+    private cameraService: CameraService
+  ) {
+    this.activeCameras = []
+    this.setActiveCameras()
+  }
+
+  private setActiveCameras(): void {
+    this.cameraService.ActiveCameras.subscribe(
+      x => {if (x) this.activeCameras = x}
+    )
+  }
 
   ngOnInit(): void {
   }
 
-  public userVal(): void {
-    console.log(this.accountService.userValue);
+  public addNewCam(): void {
+    this.dialog.open(ListCamerasComponent);
   }
 }

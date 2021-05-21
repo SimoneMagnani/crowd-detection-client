@@ -14,6 +14,8 @@ import { JWTInterceptor } from './helper/interceptor/jwt.interceptor';
 import { EditCameraComponent } from './routes/edit-camera/edit-camera.component';
 import { ShowCameraComponent } from './routes/show-camera/show-camera.component';
 import { NavBarComponent } from './layout/layout/nav-bar/nav-bar.component';
+import { EditCameraDialogComponent } from './routes/edit-camera-dialog/edit-camera-dialog.component';
+import { ListCamerasComponent } from './routes/list-cameras/list-cameras.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { NavBarComponent } from './layout/layout/nav-bar/nav-bar.component';
     EditCameraComponent,
     ShowCameraComponent,
     NavBarComponent,
+    EditCameraDialogComponent,
+    ListCamerasComponent,
   ],
   imports: [
     BrowserModule,

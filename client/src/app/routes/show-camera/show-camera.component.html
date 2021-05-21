@@ -1,20 +1,18 @@
-<div>
-  <mat-card>
-    <mat-card-title>{{camera.camera_name ? camera.camera_name : camera.camera_id}}</mat-card-title>
-    <mat-card-subtitle>{{camera.topic_root}}</mat-card-subtitle>
-    <mat-card-footer>
-      <p>{{camera.camera_address}}</p>
-      <p>
-        <button mat-mini-fab aria-label="Edit button" (click)="this.edit()">
-          <mat-icon>edit</mat-icon>
-        </button>      
-        <button class="delete" mat-mini-fab aria-label="Delete button" (click)="this.delete()">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </p>
-    </mat-card-footer>
-  </mat-card>
-</div>
+<mat-card>
+  <mat-card-title>{{camera.camera_name ? camera.camera_name : camera.camera_id}}</mat-card-title>
+  <mat-card-subtitle>{{camera.topic_root}}</mat-card-subtitle>
+  <mat-card-footer>
+    <p>{{camera.camera_address}}</p>
+    <p>
+      <button mat-mini-fab aria-label="Edit button" (click)="this.edit()">
+        <mat-icon>edit</mat-icon>
+      </button>      
+      <button class="delete" mat-mini-fab aria-label="Delete button" (click)="this.delete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </p>
+  </mat-card-footer>
+</mat-card>
 
 
 <!--  export interface Camera {
