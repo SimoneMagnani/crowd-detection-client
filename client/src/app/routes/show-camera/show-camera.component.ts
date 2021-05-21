@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Camera } from 'src/app/model/Camera/camera';
-import { LogLevel } from 'src/app/model/logLevel';
 import { ApiURLService } from 'src/app/services/api-url.service';
 import { LogService } from 'src/app/services/log.service';
+import { EditCameraDialogComponent } from '../edit-camera-dialog/edit-camera-dialog.component';
 
 @Component({
   selector: 'app-show-camera',
@@ -15,6 +16,7 @@ export class ShowCameraComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private apiURL: ApiURLService,
+    public dialog: MatDialog,
     private logService: LogService
   ) { }
 
@@ -39,4 +41,9 @@ export class ShowCameraComponent implements OnInit {
     }
   }
 
+  public edit() {
+    this.dialog.open(EditCameraDialogComponent, {data: this.camera}).afterClosed().subscribe(e => {
+      window.location.reload()
+    });
+  }
 }

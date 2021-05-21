@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080'
+  apiUrl: 'http://localhost:8080',
+  root_topic: "detection",
+  mqtt_broker_ip: "192.168.99.100",
+  mqtt_broker_port: 1884
 };
 
 /*

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Camera } from 'src/app/model/Camera/camera';
 import { ApiURLService } from 'src/app/services/api-url.service';
@@ -8,11 +9,11 @@ import { LogService } from 'src/app/services/log.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-add-camera',
-  templateUrl: './add-camera.component.html',
-  styleUrls: ['./add-camera.component.scss']
+  selector: 'app-edit-camera-dialog',
+  templateUrl: './edit-camera-dialog.component.html',
+  styleUrls: ['./edit-camera-dialog.component.scss']
 })
-export class AddCameraComponent implements OnInit {
+export class EditCameraDialogComponent implements OnInit {
   form: FormGroup;
   loading = false;
   submitted = false;
@@ -24,11 +25,13 @@ export class AddCameraComponent implements OnInit {
     private http: HttpClient,
     private logService: LogService,
     private apiURL: ApiURLService,
+    @Inject(MAT_DIALOG_DATA) public camera: Camera
   ) {
+    console.log(camera)
     this.form = this.formBuilder.group({
-      topic: ['', Validators.required],
-      address: ['', Validators.required],
-      cname: ['',]
+      topic: [camera.topic_root, Validators.required],
+      address: [camera.camera_address, Validators.required],
+      cname: [camera.camera_name,]
     });
   }
 
@@ -65,6 +68,7 @@ export class AddCameraComponent implements OnInit {
     topic = topic.startsWith("/") ? topic.substring(1) : topic
     topic = topic.startsWith(root) ? topic.substring(root.length) : topic
     topic = topic.startsWith("/") ? topic.substring(1) : topic
+    console.log(topic)
     let newCamera = {
       "camera_name": this.f.cname.value,
       "camera_address": this.f.address.value,
@@ -72,10 +76,12 @@ export class AddCameraComponent implements OnInit {
       "mqtt_broker_ip": environment.mqtt_broker_ip,
       "mqtt_broker_port": environment.mqtt_broker_port
     }
-    console.log(`${this.apiURL.baseApiUrl}/cameras`)
-    this.http.post<Camera | null>(`${this.apiURL.baseApiUrl}/cameras`, newCamera)
+    this.http.put<Camera | null>(`${this.apiURL.baseApiUrl}/camera/${this.camera.camera_id}`, newCamera)
       .subscribe(
-        x => this.logService.messageSnackBar("add correctly " +x?.camera_id),
+        x => {
+          this.logService.messageSnackBar("edit correctly " +x?.camera_id)
+          window.location.reload()
+        },
         err => this.logService.errorSnackBar(err)
       );
 
