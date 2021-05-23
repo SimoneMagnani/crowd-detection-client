@@ -12,18 +12,25 @@ import { ListCamerasComponent } from '../../list-cameras/list-cameras.component'
 export class HomePageComponent implements OnInit {
 
   public activeCameras: Camera[]
+  public crowdCameras: boolean[]
 
   constructor(
     public dialog: MatDialog,
     private cameraService: CameraService
   ) {
     this.activeCameras = []
+    this.crowdCameras = []
     this.setActiveCameras()
   }
 
   private setActiveCameras(): void {
     this.cameraService.ActiveCameras.subscribe(
-      x => {if (x) this.activeCameras = x}
+      x => {
+        if (x) {
+          this.activeCameras = x
+          this.activeCameras.forEach(cam => {this.crowdCameras.push(Math.random() > 0.5)})
+        }
+      }
     )
   }
 
@@ -32,5 +39,9 @@ export class HomePageComponent implements OnInit {
 
   public addNewCam(): void {
     this.dialog.open(ListCamerasComponent);
+  }
+
+  public getClass(i: number): string {
+    return this.crowdCameras[i] ? "crowd" : "ok"
   }
 }
