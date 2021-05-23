@@ -16,6 +16,8 @@ export interface CoreLog {
 }
 
 export interface Info {
-  
-
+  timestamp: number,
+  group_number: number,
+  group_sizes: number[],
+  people_number: number
 }

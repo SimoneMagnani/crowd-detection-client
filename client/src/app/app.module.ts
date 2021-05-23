@@ -17,6 +17,8 @@ import { NavBarComponent } from './layout/layout/nav-bar/nav-bar.component';
 import { EditCameraDialogComponent } from './routes/edit-camera-dialog/edit-camera-dialog.component';
 import { ListCamerasComponent } from './routes/list-cameras/list-cameras.component';
 import { LogsComponent } from './routes/logs/logs.component';
+import { NgxMqttClientModule } from 'ngx-mqtt-client';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,14 @@ import { LogsComponent } from './routes/logs/logs.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    NgxMqttClientModule.withOptions({
+      manageConnectionManually: true, //this flag will prevent the service to connection automatically
+      host: environment.mqtt_broker_ip,
+      protocol: environment.mqtt_broker_protocol,
+      port: environment.mqtt_broker_port,
+      path: '/mqtt'
+  })
   ], 
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }
