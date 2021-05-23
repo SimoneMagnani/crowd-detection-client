@@ -16,6 +16,7 @@ import { ShowCameraComponent } from './routes/show-camera/show-camera.component'
 import { NavBarComponent } from './layout/layout/nav-bar/nav-bar.component';
 import { EditCameraDialogComponent } from './routes/edit-camera-dialog/edit-camera-dialog.component';
 import { ListCamerasComponent } from './routes/list-cameras/list-cameras.component';
+import { LogsComponent } from './routes/logs/logs.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ListCamerasComponent } from './routes/list-cameras/list-cameras.compone
     NavBarComponent,
     EditCameraDialogComponent,
     ListCamerasComponent,
+    LogsComponent,
   ],
   imports: [
     BrowserModule,

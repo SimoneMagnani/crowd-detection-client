@@ -15,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 
@@ -41,6 +42,7 @@ import { MatListModule } from '@angular/material/list';
     MatSnackBarModule,
     MatCardModule,
     MatListModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
   ],
@@ -66,6 +68,7 @@ import { MatListModule } from '@angular/material/list';
     MatFormFieldModule,
     MatCardModule,
     MatListModule,
+    MatProgressSpinnerModule,
   ]
 })
 export class SharedModule { }

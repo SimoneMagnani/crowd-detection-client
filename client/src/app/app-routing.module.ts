@@ -5,6 +5,7 @@ import { LayoutComponent } from './layout/layout/layout.component';
 import { AddCameraComponent } from './routes/add-camera/add-camera.component';
 import { EditCameraComponent } from './routes/edit-camera/edit-camera.component';
 import { HomePageComponent } from './routes/home/home-page/home-page.component';
+import { LogsComponent } from './routes/logs/logs.component';
 
 
 const accountModule = () => import('./routes/account/account.module').then(x => x.AccountModule);
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: 'account', loadChildren: accountModule },
     { path: 'camera/add', component: AddCameraComponent, canActivate: [AuthGuard] },
     { path: 'camera/edit', component: EditCameraComponent, canActivate: [AuthGuard] },
+    { path: 'logs', component: LogsComponent, canActivate: [AuthGuard] },
     //{ path: 'game', loadChildren: () => GameModule },
     { path: '**', redirectTo: 'home' }
   ]
