@@ -31,8 +31,8 @@ export class ListCamerasComponent implements OnInit {
     this.cameraService.allCameras.subscribe(
       x => {
         if (x) {
-          this.isActiveCameras = x.map(cam => this.data.selected(cam.camera_id))
           this.cameras = x
+          this.isActiveCameras = x.map(cam => this.data.selected(cam.camera_id))
         }
       }
     )
@@ -42,8 +42,7 @@ export class ListCamerasComponent implements OnInit {
   }
 
   public save(): void {
-    console.log(this.selectedCameras)
-    this.data.post(this.selectedCameras._value)
+    this.data.post(this.selectedCameras.selectedOptions.selected.map(opt => opt.value))
   }
 
 }
