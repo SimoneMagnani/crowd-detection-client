@@ -1,6 +1,12 @@
 .nav-buttons {
   background-color: grey;
 }
+.mat-button{
+  background-color: white;
+}
+button {
+  color: black;
+}
 
 #desktop {
   display: none;
@@ -19,7 +25,7 @@
   background-color: grey;
 }
 
-#desktop {
+/*#desktop {
   width: 100%;
   display: flex;
   align-items: right;
@@ -35,6 +41,4 @@
   display: none;
 }
 
-button {
-  color: black;
-}
+*/

@@ -1,7 +1,14 @@
-.mat-raised-button {
-  margin-left: 0.1em;
-}
 .logout {
   background-color: brown;
   color: white;
+  border-radius: 0cm;
+}
+
+div {
+  background-color: white;
+  display: grid;
+}
+
+.mat-raised-button {
+  margin-top: 0.1em;
 }
