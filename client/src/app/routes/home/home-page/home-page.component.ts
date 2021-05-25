@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ConnectionStatus, MqttService, SubscriptionGrant } from 'ngx-mqtt-client';
+import { IMqttMessage, IMqttServiceOptions, MqttService } from 'ngx-mqtt';
+import { Subscription } from 'rxjs';
 import { Camera } from 'src/app/model/Camera/camera';
-import { CoreLog, Logs } from 'src/app/model/log';
+import { AccountService } from 'src/app/services/account.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { LogService } from 'src/app/services/log.service';
+import { environment } from 'src/environments/environment';
 import { ListCamerasComponent } from '../../list-cameras/list-cameras.component';
 
 @Component({
@@ -12,46 +14,58 @@ import { ListCamerasComponent } from '../../list-cameras/list-cameras.component'
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnDestroy {
+
+  private MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+    connectOnCreate: true,
+    hostname: environment.mqtt_broker_ip_for_client,
+    port: environment.mqtt_broker_port,
+    protocol: (environment.mqtt_broker_protocol === "wss") ? "wss" : "ws",
+    path: '',
+    username: this.accountService.userValue ? this.accountService.userValue.access_token : undefined,
+    password: 'any'
+  };
 
   public activeCameras: Camera[]
   private activeCameraIDs: string[]
   public crowdCameras: boolean[]
+  private unsubscribe: Subscription[]
 
   constructor(
     public dialog: MatDialog,
     private cameraService: CameraService,
     private mqttService: MqttService,
-    private logService: LogService
+    private logService: LogService,
+    private accountService: AccountService
   ) {
     this.activeCameras = []
     this.activeCameraIDs = []
     this.crowdCameras = []
+    this.unsubscribe = []
     this.setActiveCameras()
-    this.mqttService.status().subscribe((s: ConnectionStatus) => {
-      const status = s === ConnectionStatus.CONNECTED ? 'CONNECTED' : 'DISCONNECTED';
-      this.logService.log(status)
-    });
+  }
+  
+  ngOnDestroy(): void {
+    this.unsubscribe.forEach(obs => obs.unsubscribe())
   }
 
   connect(): void {
-    this.mqttService.connect({});
+    this.mqttService.connect(this.MQTT_SERVICE_OPTIONS);
   }
 
   subscribe(topic: string): void {
-    this.mqttService.subscribeTo<CoreLog>(topic)
-      .subscribe({
-        next: (msg: SubscriptionGrant | CoreLog) => {
-          if (msg instanceof SubscriptionGrant) {
-            this.logService.log('Subscribed to ' + topic + ' topic!');
-          } else {
-            this.crowdCameras[this.activeCameraIDs.indexOf(msg.camera_id)] = msg.data.group_number > 0
-          }
+    this.unsubscribe.push(
+      this.mqttService.observe(topic).subscribe(
+        (data: IMqttMessage) => {
+          console.log(data)
+          let msg = JSON.parse(data.payload.toString());
+          this.crowdCameras[this.activeCameraIDs.indexOf(msg.camera_id)] = msg.data.group_number > 0
         },
-        error: (error: Error) => {
+        (error: Error) => {
           this.logService.log(`Something went wrong: ${error.message}`);
         }
-      });
+      )
+    )
   }
 
   private setActiveCameras(): void {
@@ -59,21 +73,30 @@ export class HomePageComponent implements OnInit {
       x => {
         if (x) {
           this.activeCameras = x
+          console.log("connecting")
+          this.connect()
+          console.log("connected")
           this.activeCameras.forEach(cam => {
             this.subscribe(cam.topic_root)
             this.crowdCameras.push(false)
           })
+          console.log("pushed")
           this.activeCameraIDs = this.activeCameras.map(cam => cam.camera_id)
         }
       }
     )
   }
 
-  ngOnInit(): void {
-  }
-
   public addNewCam(): void {
-    this.dialog.open(ListCamerasComponent);
+    this.dialog.open(ListCamerasComponent/*, {data:{
+      post: (selected: string[] | null)=> {
+        if (selected) {
+          this.cameraService.setActiveCamerasFromIDs(selected)
+          window.location.reload()
+        }
+      }, 
+      selected: (ids:string) => this.cameraService.ActiveCamerasID.includes(ids)
+    }}*/);
   }
 
   public getClass(i: number): string {

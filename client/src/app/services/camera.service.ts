@@ -26,7 +26,11 @@ export class CameraService {
   }
 
   public setActiveCameras(camera: Camera[]): void {
-    localStorage.setItem(this.homeLocalStorage, JSON.stringify(camera.map(cam => cam.camera_id)))
+    this.setActiveCamerasFromIDs(camera.map(cam => cam.camera_id))
+  }
+
+  public setActiveCamerasFromIDs(ids: string[]): void {
+    localStorage.setItem(this.homeLocalStorage, JSON.stringify(ids))
   }
 
   get ActiveCamerasID(): string[] {

@@ -12,7 +12,7 @@
     <input type="text" matInput placeholder="topic"/>
   </mat-form-field>
 </div>
-<!--div class="container">
+<div class="container">
   <div class="mat-elevation-z8" class="tableContainer">
     <div *ngIf="isLoading" class="loading">
       <mat-progress-spinner
@@ -21,36 +21,42 @@
       </mat-progress-spinner>
     </div>
     <table mat-table [dataSource]="dataSource">
-      <ng-container matColumnDef="score">
-        <th mat-header-cell *matHeaderCellDef>Score</th>
+      <ng-container matColumnDef="timestamp">
+        <th mat-header-cell *matHeaderCellDef>timestamp</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.score | number }}
+          {{ element.timestamp | date:'short' }}
         </td>
       </ng-container>
-      <ng-container matColumnDef="guesses">
-        <th mat-header-cell *matHeaderCellDef>Guesses</th>
+      <ng-container matColumnDef="camera_id">
+        <th mat-header-cell *matHeaderCellDef>camera_id</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.guesses | number }}
+          {{ element.camera_id | number }}
         </td>
       </ng-container>
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef> Date </th>
+      <ng-container matColumnDef="topic">
+        <th mat-header-cell *matHeaderCellDef> topic </th>
         <td mat-cell *matCellDef="let element">
-          {{ element.date | date:'dd/M/yy' }}
+          {{ element.topic | date:'dd/M/yy' }}
         </td>
       </ng-container>
-      <ng-container matColumnDef="duration">
-        <th mat-header-cell *matHeaderCellDef> Duration </th>
+      <ng-container matColumnDef="group_sizes">
+        <th mat-header-cell *matHeaderCellDef> group_sizes </th>
         <td mat-cell *matCellDef="let element">
-          {{ element.duration | number }}
+          {{ element.data.group_sizes }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="people_number">
+        <th mat-header-cell *matHeaderCellDef> people_number </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.data.people_number | number }}
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      <tr mat-footer-row *matFooterRowDef="['paginator']"></tr-->
+      <tr mat-footer-row *matFooterRowDef="['paginator']"></tr>
 
     <!-- Paginator column -->
-    <!--ng-container matColumnDef="paginator">
+    <ng-container matColumnDef="paginator">
       <td mat-footer-cell *matFooterCellDef colspan="3">
         <mat-paginator
           [length]="total"
@@ -63,4 +69,4 @@
     </ng-container>
     </table>
   </div>
-</div-->
+</div>

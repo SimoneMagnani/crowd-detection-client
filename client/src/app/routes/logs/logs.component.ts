@@ -15,6 +15,18 @@ import { LogService } from 'src/app/services/log.service';
 })
 export class LogsComponent implements OnInit, OnDestroy {
 
+  azz: CoreLog = {
+    timestamp: 1,
+    camera_id: "string",
+    topic: "string",
+    data: {
+      timestamp: 1,
+      group_number: 1,
+      group_sizes: [2,3],
+      people_number: 2
+    }
+  }
+  displayedColumns = ["timestamp", "camera_id", "topic", "group_sizes", "people_number"]
 
   private sub: Subscription | undefined;
   dataSource = new MatTableDataSource<CoreLog>([]);

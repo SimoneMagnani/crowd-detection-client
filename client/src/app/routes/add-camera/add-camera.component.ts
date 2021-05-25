@@ -14,8 +14,6 @@ import { environment } from 'src/environments/environment';
 })
 export class AddCameraComponent implements OnInit {
   form: FormGroup;
-  loading = false;
-  submitted = false;
   returnUrl = '';
 
   constructor(
@@ -69,7 +67,7 @@ export class AddCameraComponent implements OnInit {
       "camera_name": this.f.cname.value,
       "camera_address": this.f.address.value,
       "topic_root": topic,
-      "mqtt_broker_ip": environment.mqtt_broker_ip,
+      "mqtt_broker_ip": environment.mqtt_broker_ip_for_cam,
       "mqtt_broker_port": environment.mqtt_broker_port
     }
     console.log(`${this.apiURL.baseApiUrl}/cameras`)

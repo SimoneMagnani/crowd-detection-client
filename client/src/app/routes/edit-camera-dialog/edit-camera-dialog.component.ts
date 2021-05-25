@@ -73,7 +73,7 @@ export class EditCameraDialogComponent implements OnInit {
       "camera_name": this.f.cname.value,
       "camera_address": this.f.address.value,
       "topic_root": topic,
-      "mqtt_broker_ip": environment.mqtt_broker_ip,
+      "mqtt_broker_ip": environment.mqtt_broker_ip_for_cam,
       "mqtt_broker_port": environment.mqtt_broker_port
     }
     this.http.put<Camera | null>(`${this.apiURL.baseApiUrl}/camera/${this.camera.camera_id}`, newCamera)

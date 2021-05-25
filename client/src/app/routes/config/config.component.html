@@ -1,0 +1,25 @@
+<mat-card>
+  <mat-card-title>set the config for cameras</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <p>
+        <mat-form-field>
+          <input type="number" matInput placeholder="distance (cm)" formControlName="distance"/>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input type="number" matInput placeholder="fps"  formControlName="fps"/>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input type="number" matInput placeholder="min people in group"  formControlName="min_people"/>
+        </mat-form-field>
+      </p>
+      <div class="button">
+        <button type="submit" mat-button>Update</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
