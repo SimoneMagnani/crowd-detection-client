@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Config } from 'src/app/model/config';
 import { ApiURLService } from 'src/app/services/api-url.service';
 import { LogService } from 'src/app/services/log.service';
+import { environment } from 'src/environments/environment';
 import { DialogData, ListCamerasComponent } from '../list-cameras/list-cameras.component';
 
 @Component({
@@ -26,9 +27,31 @@ export class ConfigComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.form = this.formBuilder.group({
-      distance: ['', Validators.required],
-      fps: ['', Validators.required],
-      min_people: ['', Validators.required]
+      distance: [100, Validators.compose([
+        Validators.required,
+        Validators.min(1),
+      ])],
+      fps: [25, Validators.compose([
+        Validators.required,
+        Validators.min(1),
+      ])],
+      min_people: [2, Validators.compose([
+        Validators.required,
+        Validators.min(0),
+      ])],
+      height_similarity: [0.7, Validators.compose([
+        Validators.required,
+        Validators.max(1),
+        Validators.min(0),
+      ])],
+      sec_to_group: [2, Validators.compose([
+        Validators.required,
+        Validators.min(0),
+      ])],
+      sec_to_forget: [1, Validators.compose([
+        Validators.required,
+        Validators.min(0),
+      ])],
     });
   }
 
@@ -41,27 +64,18 @@ export class ConfigComponent implements OnInit {
 
   onSubmit(): void {
     if (this.form.invalid) {
-      //console.log(this.f)
-      const errors: string[] = [];
-      if (this.f.distance.invalid) {
-        errors.push('distance');
-      }
-      if (this.f.fps.invalid) {
-        errors.push('fps');
-      }
-      if (this.f.min_people.invalid) {
-        errors.push('min_people');
-      }
-      if (errors.length > 0) {
-        this.logService.log('Missing ' + errors.join(' and ') + '.');
-      }
       return;
     }
 
     let config: Config = {
       min_distance_cm: this.f.distance.value,
       fps: this.f.fps.value,
-      min_people_in_group: this.f.min_people.value
+      min_people_in_group: this.f.min_people.value,
+      height_similarity: this.f.height_similarity.value,
+      min_seconds_for_group: this.f.sec_to_group.value,
+      min_seconds_forget_group: this.f.sec_to_forget.value,
+      cm_points: environment.cm_points,
+      pixel_points: environment.pixel_points,
     }
 
     let option: DialogData = {
