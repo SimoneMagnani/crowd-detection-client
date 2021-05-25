@@ -18,8 +18,6 @@ export interface DialogData {
 })
 export class ListCamerasComponent implements OnInit {
 
-
-
   public cameras: Camera[]
   public isActiveCameras: boolean[]
   @ViewChild('selectedCameras') selectedCameras!: MatSelectionList; 
@@ -33,7 +31,6 @@ export class ListCamerasComponent implements OnInit {
     this.cameraService.allCameras.subscribe(
       x => {
         if (x) {
-          let ids = this.cameraService.ActiveCamerasID
           this.isActiveCameras = x.map(cam => this.data.selected(cam.camera_id))
           this.cameras = x
         }
@@ -45,6 +42,7 @@ export class ListCamerasComponent implements OnInit {
   }
 
   public save(): void {
+    console.log(this.selectedCameras)
     this.data.post(this.selectedCameras._value)
   }
 
