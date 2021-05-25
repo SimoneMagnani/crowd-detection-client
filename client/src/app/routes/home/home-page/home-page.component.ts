@@ -57,9 +57,9 @@ export class HomePageComponent implements OnDestroy {
     this.unsubscribe.push(
       this.mqttService.observe(topic).subscribe(
         (data: IMqttMessage) => {
-          console.log(data)
+          console.log(data.payload.toString())
           let msg = JSON.parse(data.payload.toString());
-          this.crowdCameras[this.activeCameraIDs.indexOf(msg.camera_id)] = msg.data.group_number > 0
+          this.crowdCameras[this.activeCameraIDs.indexOf(msg.camera_id)] = msg.group_number > 0
         },
         (error: Error) => {
           this.logService.log(`Something went wrong: ${error.message}`);
@@ -77,7 +77,7 @@ export class HomePageComponent implements OnDestroy {
           this.connect()
           console.log("connected")
           this.activeCameras.forEach(cam => {
-            this.subscribe(cam.topic_root)
+            this.subscribe(cam.topic_root+'/'+cam.camera_id)
             this.crowdCameras.push(false)
           })
           console.log("pushed")
