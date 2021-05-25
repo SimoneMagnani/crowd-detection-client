@@ -6,10 +6,10 @@ import { CameraService } from 'src/app/services/camera.service';
 
 
 
-/*export interface DialogData {
-  post: (string[] | null) => void;
-  selected: string | undefined;
-}*/
+export interface DialogData {
+  post: (ids: string[] | null) => void;
+  selected: (id:string) => boolean;
+}
 
 @Component({
   selector: 'app-list-cameras',
@@ -26,7 +26,7 @@ export class ListCamerasComponent implements OnInit {
 
   constructor(
     private cameraService: CameraService,
-    //@Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.cameras = []
     this.isActiveCameras = []
@@ -34,7 +34,7 @@ export class ListCamerasComponent implements OnInit {
       x => {
         if (x) {
           let ids = this.cameraService.ActiveCamerasID
-          this.isActiveCameras = x.map(cam => ids.includes(cam.camera_id))
+          this.isActiveCameras = x.map(cam => this.data.selected(cam.camera_id))
           this.cameras = x
         }
       }
@@ -45,10 +45,7 @@ export class ListCamerasComponent implements OnInit {
   }
 
   public save(): void {
-    let toSave: Camera[] = []
-    this.selectedCameras._value?.forEach(v => toSave.push(this.cameras[+v]))
-    this.cameraService.setActiveCameras(toSave)
-    window.location.reload()
+    this.data.post(this.selectedCameras._value)
   }
 
 }

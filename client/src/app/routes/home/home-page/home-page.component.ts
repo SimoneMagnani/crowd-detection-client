@@ -7,7 +7,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { LogService } from 'src/app/services/log.service';
 import { environment } from 'src/environments/environment';
-import { ListCamerasComponent } from '../../list-cameras/list-cameras.component';
+import { DialogData, ListCamerasComponent } from '../../list-cameras/list-cameras.component';
 
 @Component({
   selector: 'app-home-page',
@@ -88,7 +88,7 @@ export class HomePageComponent implements OnDestroy {
   }
 
   public addNewCam(): void {
-    this.dialog.open(ListCamerasComponent/*, {data:{
+    let option: DialogData = {
       post: (selected: string[] | null)=> {
         if (selected) {
           this.cameraService.setActiveCamerasFromIDs(selected)
@@ -96,7 +96,8 @@ export class HomePageComponent implements OnDestroy {
         }
       }, 
       selected: (ids:string) => this.cameraService.ActiveCamerasID.includes(ids)
-    }}*/);
+    }
+    this.dialog.open(ListCamerasComponent, {data:option});
   }
 
   public getClass(i: number): string {
