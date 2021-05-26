@@ -15,9 +15,13 @@ mat-card-footer {
   grid-template-columns: auto auto;
   grid-column-gap: 1em;
   p {
-      line-height: 3;
-      display: inline-block;
-      vertical-align: middle;
+    line-height: 3;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    * {
+      margin:auto;
+    }
     button + button{
       margin-left: 0.5em;
     }

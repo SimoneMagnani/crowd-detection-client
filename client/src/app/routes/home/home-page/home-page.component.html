@@ -2,5 +2,9 @@
   <button mat-raised-button color="primary" (click)="this.addNewCam()">Decide cam to inspect</button>
 </div>
 <div>
-  <app-show-camera *ngFor="let camera of activeCameras;  let i = index" [camera]= "camera" class="{{getClass(i)}}"></app-show-camera>
+  <button *ngFor="let camera of activeCameras;  let i = index"  (click)=goToLogFor(camera.camera_id)  class="{{getClass(i)}}">
+    <app-show-camera [camera]="camera"
+        customIcon="close" [onCustomClick]="this.remove(camera.camera_id)"
+        [secondSub]="this.crowdCameras[i]"></app-show-camera>
+  </button>
 </div>

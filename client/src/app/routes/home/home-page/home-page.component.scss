@@ -19,3 +19,8 @@ app-show-camera {
 .crowd {
   border: 0.5em red solid;
 }
+
+:host ::ng-deep .mat-card:not([class*=mat-elevation-z]) {
+  background-color: transparent;
+  box-shadow: 0px 0px 0px 0px;
+}

@@ -14,12 +14,11 @@ import { EditCameraDialogComponent } from '../edit-camera-dialog/edit-camera-dia
 })
 export class ShowCameraComponent implements OnInit {
   @Input() camera!: Camera;
+  @Input() customIcon!: string;
+  @Input() onCustomClick!: () => void;
+  @Input() secondSub!: string;
   constructor(
-    private http: HttpClient,
-    private apiURL: ApiURLService,
     public dialog: MatDialog,
-    private logService: LogService,
-    private cameraService: CameraService
   ) { }
 
   ngOnInit(): void {
@@ -27,18 +26,6 @@ export class ShowCameraComponent implements OnInit {
 
   public toString(cam: Camera) : string {
     return JSON.stringify(cam)
-  }
-
-
-
-  public delete() {
-    if(confirm("Are you sure to delete " + this.cameraService.camName(this.camera) + " cam?")) {
-      console.log(`${this.apiURL.baseApiUrl}/camera/${this.camera.camera_id}`)
-      this.http.delete<Camera | null>(`${this.apiURL.baseApiUrl}/camera/${this.camera.camera_id}`).subscribe(
-        x => this.logService.messageSnackBar("removed correctly" + this.cameraService.camName(this.camera)),
-        err => this.logService.errorSnackBar(err))
-        window.location.reload()
-    }
   }
 
   public edit() {

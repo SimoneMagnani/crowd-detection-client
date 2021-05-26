@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { IMqttMessage, IMqttServiceOptions, MqttService } from 'ngx-mqtt';
 import { Subscription } from 'rxjs';
 import { Camera } from 'src/app/model/Camera/camera';
@@ -28,7 +29,7 @@ export class HomePageComponent implements OnDestroy {
 
   public activeCameras: Camera[]
   private activeCameraIDs: string[]
-  public crowdCameras: boolean[]
+  public crowdCameras: string[]
   private unsubscribe: Subscription[]
 
   constructor(
@@ -36,7 +37,8 @@ export class HomePageComponent implements OnDestroy {
     private cameraService: CameraService,
     private mqttService: MqttService,
     private logService: LogService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router,
   ) {
     this.activeCameras = []
     this.activeCameraIDs = []
@@ -57,9 +59,9 @@ export class HomePageComponent implements OnDestroy {
     this.unsubscribe.push(
       this.mqttService.observe(topic).subscribe(
         (data: IMqttMessage) => {
-          console.log(data)
           let msg = JSON.parse(data.payload.toString());
-          this.crowdCameras[this.activeCameraIDs.indexOf(msg.camera_id)] = msg.data.group_number > 0
+          this.crowdCameras[this.activeCameraIDs.indexOf(msg.camera_id)] = msg.group_number > 0 ? `found ${msg.group_number} group${msg.group_number > 1 ? 's':''}` : ''
+          console.log(`the ${this.activeCameraIDs.indexOf(msg.camera_id) + 1} cam  has ${this.crowdCameras[this.activeCameraIDs.indexOf(msg.camera_id)]} as msg`)
         },
         (error: Error) => {
           this.logService.log(`Something went wrong: ${error.message}`);
@@ -73,14 +75,11 @@ export class HomePageComponent implements OnDestroy {
       x => {
         if (x) {
           this.activeCameras = x
-          console.log("connecting")
           this.connect()
-          console.log("connected")
           this.activeCameras.forEach(cam => {
             this.subscribe(cam.topic_root)
-            this.crowdCameras.push(false)
+            this.crowdCameras.push('')
           })
-          console.log("pushed")
           this.activeCameraIDs = this.activeCameras.map(cam => cam.camera_id)
         }
       }
@@ -102,5 +101,16 @@ export class HomePageComponent implements OnDestroy {
 
   public getClass(i: number): string {
     return this.crowdCameras[i] ? "crowd" : "ok"
+  }
+
+  public goToLogFor(id: string): void {
+    this.router.navigate(['/logs'], { queryParams: { camera_id: id }});
+  }
+
+  public remove(cam_id: string): () => void {
+    return () => {
+      this.cameraService.setActiveCamerasFromIDs(this.cameraService.ActiveCamerasID.filter(id => id != cam_id))
+      window.location.reload()
+    }
   }
 }
