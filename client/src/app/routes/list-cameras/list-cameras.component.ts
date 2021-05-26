@@ -18,21 +18,18 @@ export interface DialogData {
 })
 export class ListCamerasComponent implements OnInit {
 
-  public cameras: Camera[]
-  public isActiveCameras: boolean[]
+  public cams: {camera:Camera, selected:boolean}[]
   @ViewChild('selectedCameras') selectedCameras!: MatSelectionList; 
 
   constructor(
     private cameraService: CameraService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
-    this.cameras = []
-    this.isActiveCameras = []
+    this.cams = []
     this.cameraService.allCameras.subscribe(
       x => {
         if (x) {
-          this.cameras = x
-          this.isActiveCameras = x.map(cam => this.data.selected(cam.camera_id))
+          x.forEach(cam => this.cams.push({camera:cam, selected: this.data.selected(cam.camera_id)}))
         }
       }
     )
@@ -43,6 +40,10 @@ export class ListCamerasComponent implements OnInit {
 
   public save(): void {
     this.data.post(this.selectedCameras.selectedOptions.selected.map(opt => opt.value))
+  }
+  
+  public selectAllCameras(): void {
+    this.selectedCameras.selectAll()
   }
 
 }
