@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:8080',
   root_topic: "detection",
-  mqtt_broker_ip_for_cam: "192.168.1.1",
+  mqtt_broker_ip_for_cam: "192.168.1.218",
   mqtt_broker_ip_for_client: "localhost",
   mqtt_broker_port: 1884,
   mqtt_broker_protocol: 'ws',

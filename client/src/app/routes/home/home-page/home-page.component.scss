@@ -1,18 +1,17 @@
-@import "../../../styles/colors.scss";
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
-
 div {
   display: flex;
   flex-wrap: wrap;
   * {
     margin: auto;
+    margin-bottom: 1em;
   }
   margin: auto;
   margin-bottom: 1em;
 }
 
-app-show-camera {
-  margin-right: auto;
+.ok {
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
   border: 0.5em solid transparent;
 }
 

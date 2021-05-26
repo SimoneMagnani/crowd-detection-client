@@ -77,7 +77,7 @@ export class HomePageComponent implements OnDestroy {
           this.activeCameras = x
           this.connect()
           this.activeCameras.forEach(cam => {
-            this.subscribe(cam.topic_root)
+            this.subscribe(cam.topic_root+'/'+cam.camera_id)
             this.crowdCameras.push('')
           })
           this.activeCameraIDs = this.activeCameras.map(cam => cam.camera_id)
