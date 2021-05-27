@@ -1,6 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ThemePalette } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -18,18 +20,13 @@ import { LogService } from 'src/app/services/log.service';
   styleUrls: ['./logs.component.scss']
 })
 export class LogsComponent implements OnInit, OnDestroy {
+  @ViewChild('NgxMatDatetimePickerI') pickerI!: MatDatepicker<Date>;
+  @ViewChild('NgxMatDatetimePickerF') pickerF!: MatDatepicker<Date>;
+
+  public showSpinners = true;
+  public showSeconds = true;
+
   form: FormGroup;
-  azz: CoreLog = {
-    timestamp: 1,
-    camera_id: "string",
-    topic: "string",
-    data: {
-      timestamp: 1,
-      group_number: 1,
-      group_sizes: [2,3],
-      people_number: 2
-    }
-  }
   displayedColumns = ["timestamp", "camera_id", "topic", "group_sizes", "people_number"]
 
   private sub: Subscription | undefined;
@@ -64,15 +61,16 @@ export class LogsComponent implements OnInit, OnDestroy {
     this.select()
   }
 
-  private select(): void {
+  public select(): void {
     let query = {
       page: this.currentPage,
       limit: this.pageSize,
-      before: this.f.Tinizio.value || 0,
-      after: this.f.Tfine.value || Date.now(),
+      before: this.f.Tinizio.value ? this.f.Tinizio.value.getTime() : 0,
+      after: this.f.Tfine.value ? this.f.Tfine.value.getTime() : Date.now(),
       camera_id: this.f.id.value || "ciao",
       topic: this.f.topic.value || "detection/ciao"
     }
+    console.log(query)
     this.updateData(this.http.get<Logs>(this.apiURL.baseApiUrl+'/data',
       {params: new HttpParams().set('query', JSON.stringify(query))}
     ))

@@ -1,17 +1,28 @@
 <div>
-  <form [formGroup]="form" class="input">
+  <form [formGroup]="form" class="input" (ngSubmit)="this.select()">
     <mat-form-field>
       <input type="text" matInput placeholder="CameraID"  formControlName="id"/>
     </mat-form-field>
     <mat-form-field>
-      <input type="text" matInput placeholder="Tempo Inizio UTC"  formControlName="Tinizio"/>
+      <input matInput [ngxMatDatetimePicker]="NgxMatDatetimePickerI" placeholder="Seleziona la data iniziale" formControlName="Tinizio">
+      <mat-datepicker-toggle matSuffix [for]="pickerI"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #NgxMatDatetimePickerI [showSpinners]="true" [showSeconds]="showSeconds"></ngx-mat-datetime-picker>
     </mat-form-field>
     <mat-form-field>
-      <input type="text" matInput placeholder="Tempo fine UTC"  formControlName="Tfine"/>
+      <input matInput [ngxMatDatetimePicker]="NgxMatDatetimePickerF" placeholder="Seleziona la data finale" formControlName="Tfine">
+      <mat-datepicker-toggle matSuffix [for]="pickerF"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #NgxMatDatetimePickerF [showSpinners]="true" [showSeconds]="showSeconds"></ngx-mat-datetime-picker>
     </mat-form-field>
+    <!--mat-form-field>
+      <input type="text" matInput placeholder="Tempo Inizio UTC"  formControlName="Tinizio"/>
+    </mat-form-field-->
+    <!--mat-form-field>
+      <input type="text" matInput placeholder="Tempo fine UTC"  formControlName="Tfine"/>
+    </mat-form-field-->
     <mat-form-field>
       <input type="text" matInput placeholder="topic"  formControlName="topic"/>
     </mat-form-field>
+    <button type="submit" mat-button>New Search</button>
   </form>
 </div>
 <div class="container">
