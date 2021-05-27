@@ -38,6 +38,10 @@ export class ListCamerasComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public getName(camera:Camera): string {
+    return this.cameraService.camName(camera)
+  }
+
   public save(): void {
     this.data.post(this.selectedCameras.selectedOptions.selected.map(opt => opt.value))
   }
