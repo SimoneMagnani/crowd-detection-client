@@ -1,4 +1,13 @@
-div{
+.input{
+  display: flex;
+  margin:auto;
+  mat-form-field {
+    margin: auto;
+    margin-right: 0.5em;
+  }
+}
+
+div {
   display: flex;
   mat-form-field {
     margin: auto;

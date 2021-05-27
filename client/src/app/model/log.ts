@@ -1,10 +1,8 @@
 
 export interface Logs {
-  meta: {
-    total: number;
-    page: number;
-    size: number;
-  };
+  total_pages: number,
+  next_page: number,
+  total: number,
   data: [CoreLog]
 }
 

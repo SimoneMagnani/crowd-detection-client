@@ -1,16 +1,18 @@
 <div>
-  <mat-form-field>
-    <input type="text" matInput placeholder="CameraID"/>
-  </mat-form-field>
-  <mat-form-field>
-    <input type="text" matInput placeholder="Tempo Inizio UTC"/>
-  </mat-form-field>
-  <mat-form-field>
-    <input type="text" matInput placeholder="Tempo fine UTC"/>
-  </mat-form-field>
-  <mat-form-field>
-    <input type="text" matInput placeholder="topic"/>
-  </mat-form-field>
+  <form [formGroup]="form" class="input">
+    <mat-form-field>
+      <input type="text" matInput placeholder="CameraID"  formControlName="id"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Tempo Inizio UTC"  formControlName="Tinizio"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Tempo fine UTC"  formControlName="Tfine"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="topic"  formControlName="topic"/>
+    </mat-form-field>
+  </form>
 </div>
 <div class="container">
   <div class="mat-elevation-z8" class="tableContainer">
