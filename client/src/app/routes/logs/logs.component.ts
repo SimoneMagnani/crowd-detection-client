@@ -63,16 +63,16 @@ export class LogsComponent implements OnInit, OnDestroy {
 
   public select(): void {
     let query = {
-      page: this.currentPage,
-      limit: this.pageSize,
-      before: this.f.Tinizio.value ? this.f.Tinizio.value.getTime() : 0,
-      after: this.f.Tfine.value ? this.f.Tfine.value.getTime() : Date.now(),
-      camera_id: this.f.id.value || "ciao",
-      topic: this.f.topic.value || "detection/ciao"
+      page: this.currentPage+'',
+      limit: this.pageSize+'',
+      after: (this.f.Tinizio.value ? this.f.Tinizio.value.getTime() : 0)+'',
+      before: (this.f.Tfine.value ? this.f.Tfine.value.getTime() : Date.now())+'',
+      camera_id: this.f.id.value || "",
+      topic: this.f.topic.value || ""
     }
     console.log(query)
     this.updateData(this.http.get<Logs>(this.apiURL.baseApiUrl+'/data',
-      {params: new HttpParams().set('query', JSON.stringify(query))}
+      {params: query}
     ))
   }
 

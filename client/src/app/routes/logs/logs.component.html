@@ -37,31 +37,31 @@
       <ng-container matColumnDef="timestamp">
         <th mat-header-cell *matHeaderCellDef>timestamp</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.timestamp | date:'short' }}
+          {{ element.timestamp*1000 | date:'short' }}
         </td>
       </ng-container>
       <ng-container matColumnDef="camera_id">
         <th mat-header-cell *matHeaderCellDef>camera_id</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.camera_id | number }}
+          {{ element.camera_id }}
         </td>
       </ng-container>
       <ng-container matColumnDef="topic">
         <th mat-header-cell *matHeaderCellDef> topic </th>
         <td mat-cell *matCellDef="let element">
-          {{ element.topic | date:'dd/M/yy' }}
+          {{ element.topic }}
         </td>
       </ng-container>
       <ng-container matColumnDef="group_sizes">
         <th mat-header-cell *matHeaderCellDef> group_sizes </th>
         <td mat-cell *matCellDef="let element">
-          {{ element.data.group_sizes }}
+          {{element.group_sizes}}
         </td>
       </ng-container>
       <ng-container matColumnDef="people_number">
         <th mat-header-cell *matHeaderCellDef> people_number </th>
         <td mat-cell *matCellDef="let element">
-          {{ element.data.people_number | number }}
+          {{ element.people_number }}
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
