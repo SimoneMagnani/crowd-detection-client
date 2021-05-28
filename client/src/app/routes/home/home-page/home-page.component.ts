@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -5,6 +6,7 @@ import { IMqttMessage, IMqttServiceOptions, MqttService } from 'ngx-mqtt';
 import { Subscription } from 'rxjs';
 import { Camera } from 'src/app/model/Camera/camera';
 import { AccountService } from 'src/app/services/account.service';
+import { ApiURLService } from 'src/app/services/api-url.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { LogService } from 'src/app/services/log.service';
 import { environment } from 'src/environments/environment';
@@ -39,6 +41,8 @@ export class HomePageComponent implements OnDestroy {
     private logService: LogService,
     private accountService: AccountService,
     private router: Router,
+    private http: HttpClient,
+    private apiURL: ApiURLService
   ) {
     this.activeCameras = []
     this.activeCameraIDs = []
@@ -77,6 +81,8 @@ export class HomePageComponent implements OnDestroy {
           this.activeCameras = x
           this.connect()
           this.activeCameras.forEach(cam => {
+            this.http.put(`${this.apiURL.baseApiUrl}/camera/${cam.camera_id}/detection/start`,{})
+              .subscribe(x => {}, error => {})//ignoring error and return
             this.subscribe(cam.topic_root+'/'+cam.camera_id)
             this.crowdCameras.push('')
           })
