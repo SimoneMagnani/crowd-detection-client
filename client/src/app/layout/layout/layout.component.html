@@ -1,18 +1,10 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav class="nav-buttons" id="mobile" mode="side">
-    <app-nav-bar class="div-buttons" (click)="sidenav.toggle()"></app-nav-bar>
+  <mat-sidenav #sidenav class="nav-buttons" id="mobile" mode="side" opened="true" disableClose="true">
+    <app-nav-bar class="div-buttons"></app-nav-bar>
   </mat-sidenav>
   <mat-sidenav-content>
-    <nav id="desktop">
-      <app-nav-bar></app-nav-bar>
-    </nav>
-    <p id="mobile">
-      <button mat-button (click)="sidenav.toggle()">
-        <mat-icon aria-hidden="true" aria-label="menu" *ngIf="!sidenav.opened">menu</mat-icon>
-        <mat-icon aria-hidden="true" aria-label="menu" *ngIf="sidenav.opened">keyboard_arrow_left</mat-icon>
-        <span class="text">menu</span>
-      </button>
-    </p>
-    <router-outlet></router-outlet>
+    <div class="space">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

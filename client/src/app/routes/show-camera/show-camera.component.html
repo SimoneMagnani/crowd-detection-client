@@ -5,7 +5,7 @@
   <mat-card-footer>
     <p>{{camera.camera_address}}</p>
     <p>
-      <button mat-mini-fab aria-label="Edit button" (click)="this.edit()">
+      <button mat-mini-fab aria-label="Edit button" (click)="$event.preventDefault(); $event.stopPropagation(); this.edit()">
         <mat-icon>edit</mat-icon>
       </button>      
       <button class="delete" mat-mini-fab aria-label="Delete button" (click)="$event.preventDefault(); $event.stopPropagation(); this.onCustomClick()">

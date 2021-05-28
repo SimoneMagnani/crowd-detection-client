@@ -1,5 +1,5 @@
 <div>
-  <button mat-raised-button color="primary" (click)="this.addNewCam()">Decide cam to inspect</button>
+  <button mat-raised-button color="primary" (click)="this.addNewCam()">Choose cam to inspect</button>
 </div>
 <div>
   <button *ngFor="let camera of activeCameras;  let i = index"  (click)=goToLogFor(camera.camera_id)  class="{{getClass(i)}}">
