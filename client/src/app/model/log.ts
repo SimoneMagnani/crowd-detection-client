@@ -1,7 +1,7 @@
 
 export interface Logs {
   total_pages: number,
-  next_page: number,
+  pageNum: number,
   total: number,
   data: [CoreLog]
 }

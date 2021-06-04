@@ -31,3 +31,8 @@ div {
   align-items: center;
   justify-content: center;
 }
+
+td.mat-cell,th.mat-header-cell{
+  padding: 0.5em;
+  text-align: center;
+}

@@ -4,21 +4,15 @@
       <input type="text" matInput placeholder="CameraID"  formControlName="id"/>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [ngxMatDatetimePicker]="NgxMatDatetimePickerI" placeholder="Seleziona la data iniziale" formControlName="Tinizio">
+      <input matInput [ngxMatDatetimePicker]="NgxMatDatetimePickerI" placeholder="Choose 'from' Date" formControlName="Tinizio">
       <mat-datepicker-toggle matSuffix [for]="pickerI"></mat-datepicker-toggle>
       <ngx-mat-datetime-picker #NgxMatDatetimePickerI [showSpinners]="true" [showSeconds]="showSeconds"></ngx-mat-datetime-picker>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [ngxMatDatetimePicker]="NgxMatDatetimePickerF" placeholder="Seleziona la data finale" formControlName="Tfine">
+      <input matInput [ngxMatDatetimePicker]="NgxMatDatetimePickerF" placeholder="Choose 'to' Date" formControlName="Tfine">
       <mat-datepicker-toggle matSuffix [for]="pickerF"></mat-datepicker-toggle>
       <ngx-mat-datetime-picker #NgxMatDatetimePickerF [showSpinners]="true" [showSeconds]="showSeconds"></ngx-mat-datetime-picker>
     </mat-form-field>
-    <!--mat-form-field>
-      <input type="text" matInput placeholder="Tempo Inizio UTC"  formControlName="Tinizio"/>
-    </mat-form-field-->
-    <!--mat-form-field>
-      <input type="text" matInput placeholder="Tempo fine UTC"  formControlName="Tfine"/>
-    </mat-form-field-->
     <mat-form-field>
       <input type="text" matInput placeholder="topic"  formControlName="topic"/>
     </mat-form-field>
@@ -49,7 +43,7 @@
       <ng-container matColumnDef="topic">
         <th mat-header-cell *matHeaderCellDef> topic </th>
         <td mat-cell *matCellDef="let element">
-          {{ element.topic }}
+          {{ getRelevantTopic(element.topic) }}
         </td>
       </ng-container>
       <ng-container matColumnDef="group_sizes">
