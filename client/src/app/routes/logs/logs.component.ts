@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ThemePalette } from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,7 +9,6 @@ import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { CoreLog, Logs } from 'src/app/model/log';
-import { LogLevel } from 'src/app/model/logLevel';
 import { ApiURLService } from 'src/app/services/api-url.service';
 import { LogService } from 'src/app/services/log.service';
 
@@ -44,7 +42,6 @@ export class LogsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private logService: LogService,
     private formBuilder: FormBuilder,
     private apiURL: ApiURLService,
     private http: HttpClient
@@ -61,12 +58,23 @@ export class LogsComponent implements OnInit, OnDestroy {
     this.select()
   }
 
+  private timeToUTC(gtmTime: number):number {
+    return gtmTime + new Date().getTimezoneOffset()*60*1000
+  }
+
+  public timeToGTM(UTCTime: number):number {
+    return UTCTime - new Date().getTimezoneOffset()*60*1000
+  }
+
   public select(): void {
+    if (this.f.Tinizio.value)
+    console.log(this.f.Tinizio.value.getTime())
+    console.log(Date.now())
     let query = {
       page: this.currentPage+'',
       limit: this.pageSize+'',
-      after: (this.f.Tinizio.value ? this.f.Tinizio.value.getTime() : 0)+'',
-      before: (this.f.Tfine.value ? this.f.Tfine.value.getTime() : Date.now())+'',
+      after: (this.f.Tinizio.value ? this.timeToUTC(this.f.Tinizio.value.getTime()) : 0)+'',
+      before: (this.f.Tfine.value ? this.timeToUTC(this.f.Tfine.value.getTime()) : Date.now())+'',
       camera_id: this.f.id.value || "",
       topic: this.f.topic.value || ""
     }
@@ -90,7 +98,7 @@ export class LogsComponent implements OnInit, OnDestroy {
   private updateData(obs: Observable<Logs>): void {
     this.sub = obs.pipe(first()).subscribe((data) => {
       this.dataSource.data = data.data;
-      this.currentPage = Number(data.next_page - 1);
+      this.currentPage = Number(data.pageNum);
       this.total = Number(data.total)
       this.isLoading = false;
     });
@@ -100,6 +108,10 @@ export class LogsComponent implements OnInit, OnDestroy {
     this.pageSize = pageEvent.pageSize;
     this.currentPage = pageEvent.pageIndex;
     this.select();
+  }
+
+  getRelevantTopic(topic: string): string {
+    return topic.substring(0, topic.lastIndexOf('/'))
   }
 
 }
