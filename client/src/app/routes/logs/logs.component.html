@@ -31,7 +31,7 @@
       <ng-container matColumnDef="timestamp">
         <th mat-header-cell *matHeaderCellDef>timestamp</th>
         <td mat-cell *matCellDef="let element">
-          {{ this.timeToGTM(element.timestamp*1000) | date:'short' }}
+          {{ this.timeToLocal(element.timestamp*1000) | date : 'd/M/yy, HH:mm' }}
         </td>
       </ng-container>
       <ng-container matColumnDef="camera_id">

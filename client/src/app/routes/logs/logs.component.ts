@@ -58,18 +58,15 @@ export class LogsComponent implements OnInit, OnDestroy {
     this.select()
   }
 
-  private timeToUTC(gtmTime: number):number {
-    return gtmTime + new Date().getTimezoneOffset()*60*1000
+  private timeToUTC(localTime: number):number {
+    return (localTime + new Date().getTimezoneOffset()*60*1000)/1000
   }
 
-  public timeToGTM(UTCTime: number):number {
+  public timeToLocal(UTCTime: number):number {
     return UTCTime - new Date().getTimezoneOffset()*60*1000
   }
 
   public select(): void {
-    if (this.f.Tinizio.value)
-    console.log(this.f.Tinizio.value.getTime())
-    console.log(Date.now())
     let query = {
       page: this.currentPage+'',
       limit: this.pageSize+'',
