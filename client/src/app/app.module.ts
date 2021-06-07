@@ -53,7 +53,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
   ], 
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

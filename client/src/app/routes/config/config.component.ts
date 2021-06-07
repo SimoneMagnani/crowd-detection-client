@@ -31,9 +31,9 @@ export class ConfigComponent implements OnInit {
         Validators.required,
         Validators.min(1),
       ])],
-      fps: [25, Validators.compose([
+      fps: [1, Validators.compose([
         Validators.required,
-        Validators.min(1),
+        Validators.min(0.001),
       ])],
       min_people: [2, Validators.compose([
         Validators.required,
@@ -81,13 +81,14 @@ export class ConfigComponent implements OnInit {
     let option: DialogData = {
       post: (selected: string[] | null)=> {
         if (selected) {
+          let error = false
           selected.forEach( id =>     
-            this.http.put<Config | null>(`${this.apiURL.baseApiUrl}/config/camera/:id`, config)
+            this.http.put<Config | null>(`${this.apiURL.baseApiUrl}/config/camera/${id}`, config)
               .subscribe(
                 x => this.logService.messageSnackBar("update correctly"),
-                err => this.logService.errorSnackBar(err)
+                err => {error = true; this.logService.errorSnackBar(err)},
+                () => { if (!error) {window.location.reload()}}
               ))
-          window.location.reload()
         }
       }, 
       selected: (ids:string) => false
