@@ -59,11 +59,11 @@ export class LogsComponent implements OnInit, OnDestroy {
   }
 
   private timeToUTC(localTime: number):number {
-    return (localTime + new Date().getTimezoneOffset()*60*1000)/1000
+    return (localTime - new Date().getTimezoneOffset()*60*1000)/1000
   }
 
   public timeToLocal(UTCTime: number):number {
-    return UTCTime - new Date().getTimezoneOffset()*60*1000
+    return UTCTime + new Date().getTimezoneOffset()*60*1000
   }
 
   public select(): void {
@@ -72,8 +72,8 @@ export class LogsComponent implements OnInit, OnDestroy {
       limit: this.pageSize+'',
       after: (this.f.Tinizio.value ? this.timeToUTC(this.f.Tinizio.value.getTime()) : 0)+'',
       before: (this.f.Tfine.value ? this.timeToUTC(this.f.Tfine.value.getTime()) : Date.now())+'',
-      camera_id: this.f.id.value || "",
-      topic: this.f.topic.value || ""
+      camera_id: this.f.id.value ? this.f.id.value.trim() : "",
+      topic_query: this.f.topic.value ? this.f.topic.value.trim() : ""
     }
     console.log(query)
     this.updateData(this.http.get<Logs>(this.apiURL.baseApiUrl+'/data',
