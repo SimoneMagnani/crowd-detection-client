@@ -68,7 +68,6 @@ export class EditCameraDialogComponent implements OnInit {
     topic = topic.startsWith("/") ? topic.substring(1) : topic
     topic = topic.startsWith(root) ? topic.substring(root.length) : topic
     topic = topic.startsWith("/") ? topic.substring(1) : topic
-    console.log(topic)
     let newCamera = {
       "camera_name": this.f.cname.value,
       "camera_address": this.f.address.value,
