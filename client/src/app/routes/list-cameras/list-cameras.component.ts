@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectionList } from '@angular/material/list';
 import { Camera } from 'src/app/model/Camera/camera';
@@ -16,7 +16,7 @@ export interface DialogData {
   templateUrl: './list-cameras.component.html',
   styleUrls: ['./list-cameras.component.scss']
 })
-export class ListCamerasComponent implements OnInit {
+export class ListCamerasComponent implements AfterViewInit {
 
   public cams: {camera:Camera, selected:boolean}[]
   @ViewChild('selectedCameras') selectedCameras!: MatSelectionList; 
@@ -34,20 +34,35 @@ export class ListCamerasComponent implements OnInit {
       }
     )
    }
-
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    this.selectedCameras.selectionChange.subscribe(
+      x => {
+        if(x.options[0].value == 'all' && x.options[0].selected){
+          x.source.selectAll()
+        } else if(x.options[0].value == 'all' && !x.options[0].selected) {
+          x.source.deselectAll()
+        } else if(x.options[0].selected){
+          let value = x.source.options.toArray().filter(x => x.value != 'all').every(x => x.selected)
+          x.source.options.find(x => x.value == 'all')?._setSelected(value)
+        } else{
+          x.source.options.find(x => x.value == 'all')?._setSelected(false)
+        }
+      }
+    )
   }
-
   public getName(camera:Camera): string {
     return this.cameraService.camName(camera)
   }
 
   public save(): void {
-    this.data.post(this.selectedCameras.selectedOptions.selected.map(opt => opt.value))
+    let data = this.selectedCameras.selectedOptions.selected
+      .filter(opt => opt.value != 'all')
+      .map(opt => opt.value)
+
+    if(data.length > 0) {
+      this.data.post(data)
+    } 
   }
-  
-  public selectAllCameras(): void {
-    this.selectedCameras.selectAll()
-  }
+
 
 }

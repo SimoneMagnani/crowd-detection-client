@@ -63,7 +63,7 @@ export class LogsComponent implements OnInit, OnDestroy {
   }
 
   public timeToLocal(UTCTime: number):number {
-    return UTCTime + new Date().getTimezoneOffset()*60*1000
+    return UTCTime //+ new Date().getTimezoneOffset()*60*1000
   }
 
   public select(): void {

@@ -67,15 +67,14 @@ export class AddCameraComponent implements OnInit {
       "camera_name": this.f.cname.value,
       "camera_address": this.f.address.value,
       "topic_root": topic,
-      "mqtt_broker_ip": environment.mqtt_broker_ip_for_cam,
-      "mqtt_broker_port": environment.mqtt_broker_port
+      //"mqtt_broker_ip": environment.mqtt_broker_ip_for_cam,
+      //"mqtt_broker_port": environment.mqtt_broker_port
     }
-    console.log(`${this.apiURL.baseApiUrl}/cameras`)
+    this.logService.messageSnackBar(`Trying to add camera at ${this.f.address.value}...`, 30*1000);
     this.http.post<Camera | null>(`${this.apiURL.baseApiUrl}/cameras`, newCamera)
       .subscribe(
         x => this.logService.messageSnackBar("add correctly " +x?.camera_id),
         err => this.logService.errorSnackBar(err)
       );
-
   }
 }

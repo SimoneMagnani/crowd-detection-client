@@ -1,8 +1,8 @@
 <div>
   <a mat-raised-button routerLink="/home" routerLinkActive="active">Home</a>
   <a mat-raised-button routerLink="/camera/add" routerLinkActive="active">Add Camera</a>
-  <a mat-raised-button routerLink="/camera/edit" routerLinkActive="active">Edit Camera</a>
-  <a mat-raised-button routerLink="/logs" routerLinkActive="active">Logs</a>
+  <a mat-raised-button routerLink="/camera/edit" routerLinkActive="active">View Cameras</a>
   <a mat-raised-button routerLink="/config" routerLinkActive="active">Config</a>
-  <button *ngIf="this.isLogged()" mat-raised-button (click)="this.logout()" class="logout">logout</button>
+  <a mat-raised-button routerLink="/logs" routerLinkActive="active">Logs</a>
+  <button *ngIf="this.isLogged()" mat-raised-button (click)="this.logout()" class="logout">Logout</button>
 </div>

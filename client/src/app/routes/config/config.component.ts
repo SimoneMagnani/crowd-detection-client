@@ -82,13 +82,17 @@ export class ConfigComponent implements OnInit {
       post: (selected: string[] | null)=> {
         if (selected) {
           let error = false
-          selected.forEach( id =>     
-            this.http.put<Config | null>(`${this.apiURL.baseApiUrl}/config/camera/${id}`, config)
-              .subscribe(
-                x => this.logService.messageSnackBar("update correctly"),
-                err => {error = true; this.logService.errorSnackBar(err)},
-                () => { if (!error) {window.location.reload()}}
-              ))
+          this.logService.messageSnackBar(`Updating config on selected cameras... `, 60*1000);
+          selected.forEach( id => {
+            if(id) {
+              this.http.put<Config | null>(`${this.apiURL.baseApiUrl}/config/camera/${id}`, config)
+                .subscribe(
+                  x => this.logService.messageSnackBar("update correctly"),
+                  err => {error = true; this.logService.errorSnackBar(err)},
+                  () => { if (!error) {this.dialog.closeAll()}}
+                )
+            }
+            })
         }
       }, 
       selected: (ids:string) => false
