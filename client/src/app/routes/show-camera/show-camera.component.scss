@@ -27,3 +27,10 @@ mat-card-footer {
     }
   }
 }
+
+mat-card-footer.active {
+  color: green;
+}
+mat-card-footer.not_active {
+  color: red;
+}

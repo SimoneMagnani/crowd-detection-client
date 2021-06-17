@@ -33,4 +33,12 @@ export class ShowCameraComponent implements OnInit {
       window.location.reload()
     });
   }
+
+  public active(): string {
+    return this.camera.detection ? "active" : "not active"
+  }
+
+  public activeClass(): string {
+    return this.camera.detection ? "active" : "not_active"
+  }
 }
