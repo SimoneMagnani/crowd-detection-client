@@ -2,7 +2,7 @@
   <mat-list-option value="all">
     all
   </mat-list-option>
-  <mat-list-option *ngFor="let cam of cams" value="{{cam.camera.camera_id}}">
+  <mat-list-option *ngFor="let cam of cams" value="{{cam.camera.camera_id}}" selected="{{cam.selected}}">
     {{this.getName(cam.camera)}}
   </mat-list-option>
   <button mat-list-item (click)="save()"> Save </button>
