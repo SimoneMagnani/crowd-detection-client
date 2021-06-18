@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { IMqttMessage, IMqttServiceOptions, MqttService } from 'ngx-mqtt';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Camera } from 'src/app/model/Camera/camera';
 import { AccountService } from 'src/app/services/account.service';
 import { ApiURLService } from 'src/app/services/api-url.service';
@@ -59,18 +60,47 @@ export class HomePageComponent implements OnDestroy {
     this.mqttService.connect(this.MQTT_SERVICE_OPTIONS);
   }
 
-  subscribe(topic: string): void {
+  subscribe(topic: string, id: string): void {
     this.unsubscribe.push(
       this.mqttService.observe(topic).subscribe(
         (data: IMqttMessage) => {
           let msg = JSON.parse(data.payload.toString());
-          this.crowdCameras[this.activeCameraIDs.indexOf(msg.camera_id)] = msg.group_number > 0 ? `found ${msg.group_number} group${msg.group_number > 1 ? 's':''}` : ''
-          console.log(`the ${this.activeCameraIDs.indexOf(msg.camera_id) + 1} cam  has ${this.crowdCameras[this.activeCameraIDs.indexOf(msg.camera_id)]} as msg`)
+          this.crowdCameras[this.activeCameraIDs.indexOf(id)] = msg.group_number > 0 ? `found ${msg.group_number} group${msg.group_number > 1 ? 's':''}` : ''
+          console.log(`the ${this.activeCameraIDs.indexOf(id)} cam  has ${this.crowdCameras[this.activeCameraIDs.indexOf(id)]} as msg`)
         },
         (error: Error) => {
           this.logService.log(`Something went wrong: ${error.message}`);
         }
       )
+    )
+  }
+
+  private startDetection(id:string, next?: (value: Object) => void): void {
+    this.cameraService.nonDetectingCameras.subscribe(
+      cameras => 
+        this.camerasToStartStop(cameras, id, "starting " + id,
+                                  `${this.apiURL.baseApiUrl}/camera/${id}/detection/start`, next)
+    )
+  }
+
+  private camerasToStartStop(cameras: Camera[] | undefined, id:string, msg: string, api: string, next?: (value: Object) => void): void {
+    cameras?.forEach(cam => 
+      {
+        if (cam.camera_id == id){
+          this.logService.messageSnackBar(msg);
+          this.http.put(api,{}).subscribe(
+            next, 
+            error => this.logService.errorSnackBar(error),
+            () => window.location.reload())
+        }
+    })
+  }
+
+  private stopDetection(id:string, next?: (value: Object) => void): void {
+    this.cameraService.detectingCameras.subscribe(
+      cameras => 
+        this.camerasToStartStop(cameras, id, "stopping " + id,
+                                  `${this.apiURL.baseApiUrl}/camera/${id}/detection/stop`, next)
     )
   }
 
@@ -81,9 +111,8 @@ export class HomePageComponent implements OnDestroy {
           this.activeCameras = x
           this.connect()
           this.activeCameras.forEach(cam => {
-            this.http.put(`${this.apiURL.baseApiUrl}/camera/${cam.camera_id}/detection/start`,{})
-              .subscribe(x => {}, error => {})//ignoring error and return
-            this.subscribe(cam.topic_root+'/'+cam.camera_id)
+            this.startDetection(cam.camera_id, x => {})
+            this.subscribe(cam.topic_root+'/'+cam.camera_id, cam.camera_id)
             this.crowdCameras.push('')
           })
           this.activeCameraIDs = this.activeCameras.map(cam => cam.camera_id)
@@ -92,11 +121,35 @@ export class HomePageComponent implements OnDestroy {
     )
   }
 
+  public startCams(): void {
+    let option: DialogData = {
+      post: (list: {id:string, selected:boolean}[] | null)=> {
+        list?.forEach(item => {
+          console.log(item.selected)
+          if (item.selected) {
+            this.startDetection(item.id, x => {})
+          } else {
+            this.stopDetection(item.id, x => {})
+          }
+        })
+      }, 
+      selected: (id:string) => false
+    }
+    this.cameraService.detectingCameras.subscribe(
+      allCameras => option.selected = (id:string) => allCameras?.find(cam => cam.camera_id == id) ? true : false,
+      () => {},
+      () => this.dialog.open(ListCamerasComponent, {data:option})
+    )
+
+    
+  }
+
   public addNewCam(): void {
     let option: DialogData = {
-      post: (selected: string[] | null)=> {
-        if (selected) {
-          this.cameraService.setActiveCamerasFromIDs(selected)
+      post: (list: {id:string, selected:boolean}[] | null) => {
+        let selectedList = list?.filter(item => item.selected).map(item => item.id)
+        if (selectedList) {
+          this.cameraService.setActiveCamerasFromIDs(selectedList)
           window.location.reload()
         }
       }, 
