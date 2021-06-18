@@ -75,7 +75,7 @@ export class LogsComponent implements OnInit, OnDestroy {
       camera_id: this.f.id.value ? this.f.id.value.trim() : "",
       topic_query: this.f.topic.value ? this.f.topic.value.trim() : ""
     }
-    console.log(query)
+    //console.log(query)
     this.updateData(this.http.get<Logs>(this.apiURL.baseApiUrl+'/data',
       {params: query}
     ))

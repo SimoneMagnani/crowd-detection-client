@@ -35,7 +35,7 @@ export class EditCameraComponent implements OnInit {
     return () =>{
       if(confirm("Are you sure to delete " + this.cameraService.camName(camera) + " cam?")) {
         let error = false
-        console.log(`${this.apiURL.baseApiUrl}/camera/${camera.camera_id}`)
+        //console.log(`${this.apiURL.baseApiUrl}/camera/${camera.camera_id}`)
         this.http.delete<Camera | null>(`${this.apiURL.baseApiUrl}/camera/${camera.camera_id}`).subscribe(
           x => this.logService.messageSnackBar("removed correctly" + this.cameraService.camName(camera)),
           err => { error = true; this.logService.errorSnackBar(err)},
