@@ -79,11 +79,12 @@ export class ConfigComponent implements OnInit {
     }
 
     let option: DialogData = {
-      post: (selected: string[] | null)=> {
-        if (selected) {
+      post: (list: {id:string, selected:boolean}[] | null)=> {
+        let selectedList = list?.filter(item => item.selected).map(item => item.id)
+        if (selectedList) {
           let error = false
           this.logService.messageSnackBar(`Updating config on selected cameras... `, 60*1000);
-          selected.forEach( id => {
+          selectedList.forEach( id => {
             if(id) {
               this.http.put<Config | null>(`${this.apiURL.baseApiUrl}/config/camera/${id}`, config)
                 .subscribe(
