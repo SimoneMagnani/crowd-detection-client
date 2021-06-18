@@ -44,5 +44,13 @@ export class CameraService {
 
   get ActiveCameras(): Observable<Camera[] | undefined> {
     return this.allCameras.pipe(map(allCameras => allCameras?.filter(cam => this.ActiveCamerasID.includes(cam.camera_id))))
+  } 
+  
+  get nonDetectingCameras(): Observable<Camera[] | undefined> {
+    return this.allCameras.pipe(map(allCameras => allCameras?.filter(cam => !cam.detection)))
+  }
+
+  get detectingCameras(): Observable<Camera[] | undefined> {
+    return this.allCameras.pipe(map(allCameras => allCameras?.filter(cam => cam.detection)))
   }
 }
