@@ -7,7 +7,7 @@ import { CameraService } from 'src/app/services/camera.service';
 
 
 export interface DialogData {
-  post: (ids: string[] | null) => void;
+  post: (list: {id:string, selected:boolean}[] | null) => void;
   selected: (id:string) => boolean;
 }
 
@@ -55,13 +55,10 @@ export class ListCamerasComponent implements AfterViewInit {
   }
 
   public save(): void {
-    let data = this.selectedCameras.selectedOptions.selected
+    let data = this.selectedCameras.options
       .filter(opt => opt.value != 'all')
-      .map(opt => opt.value)
-
-    if(data.length > 0) {
-      this.data.post(data)
-    } 
+      .map(opt => {return {id: opt.value, selected: opt.selected}})
+    this.data.post(data)
   }
 
 
