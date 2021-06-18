@@ -59,7 +59,7 @@ export class AccountService {
   }
 
   login(username: string, password: string): Observable<User | null> {
-    console.log({ username, password });
+    //console.log({ username, password });
     return this.http.post<User | null>(`${this.apiURL.baseApiUrl}/users/login`, { username, password })
       .pipe(map(u => {
         //console.log(u);

@@ -66,7 +66,7 @@ export class HomePageComponent implements OnDestroy {
         (data: IMqttMessage) => {
           let msg = JSON.parse(data.payload.toString());
           this.crowdCameras[this.activeCameraIDs.indexOf(id)] = msg.group_number > 0 ? `found ${msg.group_number} group${msg.group_number > 1 ? 's':''}` : ''
-          console.log(`the ${this.activeCameraIDs.indexOf(id)} cam  has ${this.crowdCameras[this.activeCameraIDs.indexOf(id)]} as msg`)
+          //console.log(`the ${this.activeCameraIDs.indexOf(id)} cam  has ${this.crowdCameras[this.activeCameraIDs.indexOf(id)]} as msg`)
         },
         (error: Error) => {
           this.logService.log(`Something went wrong: ${error.message}`);
@@ -125,7 +125,6 @@ export class HomePageComponent implements OnDestroy {
     let option: DialogData = {
       post: (list: {id:string, selected:boolean}[] | null)=> {
         list?.forEach(item => {
-          console.log(item.selected)
           if (item.selected) {
             this.startDetection(item.id, x => {})
           } else {
