@@ -4,5 +4,7 @@ export interface Camera {
   "camera_address": string,
   "topic_root": string,
   "mqtt_broker_ip": string ,
-  "mqtt_broker_port": number
+  "mqtt_broker_port": number,
+  "detection": boolean,
+  "running": boolean,
 }
